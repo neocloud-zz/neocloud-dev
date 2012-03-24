@@ -5,6 +5,11 @@ var http = require('http');
 var numCPUs = require('os').cpus().length; // Get the number of CPUs
 console.log('numCPUs: ' + numCPUs);
 
+if (numCPUs == 1) {
+  // If only one CPU then must be ec2
+  process.env.PORT = 8888
+  }
+
 if (cluster.isMaster) {
   // Fork each worker onto its own thread
   for (var i = 0; i < numCPUs; i++) {
