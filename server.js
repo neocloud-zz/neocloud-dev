@@ -7,8 +7,10 @@ console.log('numCPUs: ' + numCPUs);
 
 if (numCPUs == 1) {
   // If only one CPU then must be ec2
-  process.env.PORT = 8888
+  //process.env.PORT = 8888
   }
+
+var PORT = process.env.PORT || 8888;
 
 if (cluster.isMaster) {
   // Fork each worker onto its own thread
@@ -25,8 +27,11 @@ else {
   // If the worker is not the master process, run it as an HTTP server
   http.Server(function(req, res) {
     res.writeHead(200);
-    res.end("hello world\n");
-  }).listen(process.env.PORT, "0.0.0.0");
+    res.end("NeoCloud node.js Test Portal\n");
+  }).listen(PORT, "0.0.0.0");
 }
     // We're using the special Cloud9 IDE port and hostname here;
     // you'll probably just want something like (8080, "127.0.0.1")
+
+process.title ="gensvr001.ec2.neocloud.com";
+console.log("Server %s listening at http://localhost" + (PORT === 80 ? "" : ":" + PORT) + "/", process.title);
